@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+<div>{% if msg %}<p>{{ msg }}</p>{% endif %}</div>
+<h2>Products Table</h2>
+
+<form action="#" method="post">
+    {% csrf_token %}
+    <label for="name">Product Name:</label><br>
+    <input type="text" id="name" name="name"><br>
+    <label for="price">Price:</label><br>
+    <input type="text" id="price" name="price"><br>
+    <label for="quantity">Quantity:</label><br>
+    <input type="text" id="quantity" name="quantity"><br><br>
+    <input type="submit" value="Submit">
+</form>
+
+
+<table>
+  <tr>
+    <th>Product Name</th>
+    <th>Price </th>
+    <th>Quantity</th>
+    <th>Actions </th>
+  </tr>
+{% for product in products %}
+  <tr>
+    <td>{{ product.name }}</td>
+    <td>{{ product.price }}</td>
+    <td>{{ product.quantity }}</td>
+    <td>
+        {% comment %} <a href="{% url 'product_update' product.id %}">Update</a> {% endcomment %}
+        <a href="{% url 'product_delete' product.id %}">Delete</a>
+
+    </td>
+  </tr>
+{% endfor %}
+</table>
+
+</body>
+</html>
+

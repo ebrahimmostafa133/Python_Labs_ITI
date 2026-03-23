@@ -1,0 +1,381 @@
+{% extends 'base.html' %}
+
+{% block title %}Students - ITI School{% endblock %}
+
+{% block extra_css %}
+/* Main Content */
+.main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 100px 2rem 4rem;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeUp 0.8s ease;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 0.5rem;
+}
+
+.page-header h1 i { margin-right: 0.5rem; color: var(--primary); }
+
+.page-header p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+}
+
+/* Success Message */
+.alert-success {
+    background: rgba(46,213,115,0.1);
+    border: 1px solid rgba(46,213,115,0.3);
+    color: var(--success);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 500;
+    animation: fadeUp 0.5s ease;
+}
+
+.alert-success i { font-size: 1.2rem; }
+
+/* Form Card */
+.form-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+    animation: fadeUp 0.8s ease 0.2s both;
+}
+
+.form-card h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-card h2 i { color: var(--primary); }
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="number"] {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+}
+
+.form-group input[type="file"] {
+    background: rgba(255,255,255,0.05);
+    border: 2px dashed var(--glass-border);
+    border-radius: 12px;
+    padding: 1.2rem;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-group input[type="file"]:hover {
+    border-color: var(--primary);
+    background: rgba(108,99,255,0.05);
+}
+
+.btn-submit {
+    grid-column: 1 / -1;
+    padding: 0.9rem 2rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 25px rgba(108,99,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 35px rgba(108,99,255,0.5);
+}
+
+/* Table Card */
+.table-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    animation: fadeUp 0.8s ease 0.4s both;
+}
+
+.table-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table-header h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.table-header h2 i { color: var(--accent); }
+
+.student-count {
+    background: rgba(108,99,255,0.15);
+    color: var(--primary);
+    padding: 0.3rem 0.9rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    text-align: left;
+    padding: 1rem 1.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+tbody td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 0.95rem;
+    vertical-align: middle;
+}
+
+tbody tr {
+    transition: all 0.2s ease;
+}
+
+tbody tr:hover {
+    background: rgba(255,255,255,0.03);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.student-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid var(--glass-border);
+}
+
+.no-image {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: rgba(108,99,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 1rem;
+}
+
+.btn-delete {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 1rem;
+    background: rgba(255,71,87,0.1);
+    color: var(--danger);
+    border: 1px solid rgba(255,71,87,0.2);
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-delete:hover {
+    background: rgba(255,71,87,0.2);
+    border-color: var(--danger);
+    transform: translateY(-1px);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-muted);
+}
+
+.empty-state i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.3;
+}
+
+.empty-state p {
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .form-grid { grid-template-columns: 1fr; }
+    table { font-size: 0.85rem; }
+    thead th, tbody td { padding: 0.75rem 1rem; }
+}
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <div class="page-header">
+        <h1><i class="fa-solid fa-users"></i> Students</h1>
+        <p>Manage your students — add new records and keep track of everyone</p>
+    </div>
+
+    {% if msg %}
+    <div class="alert-success">
+        <i class="fa-solid fa-circle-check"></i>
+        {{ msg }}
+    </div>
+    {% endif %}
+
+    <!-- Create Student Form -->
+    <div class="form-card">
+        <h2><i class="fa-solid fa-user-plus"></i> Add New Student</h2>
+        <form action="#" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter student name" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" placeholder="Enter age" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="student@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="image">Profile Photo</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
+                <button type="submit" class="btn-submit">
+                    <i class="fa-solid fa-plus"></i> Add Student
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Students Table -->
+    <div class="table-card">
+        <div class="table-header">
+            <h2><i class="fa-solid fa-list"></i> Student Records</h2>
+            <span class="student-count">{{ students|length }} student{{ students|length|pluralize }}</span>
+        </div>
+        {% if students %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for student in students %}
+                <tr>
+                    <td>
+                        {% if student.image %}
+                            <img src="{{ student.image.url }}" alt="{{ student.name }}" class="student-avatar">
+                        {% else %}
+                            <div class="no-image"><i class="fa-solid fa-user"></i></div>
+                        {% endif %}
+                    </td>
+                    <td><strong>{{ student.name }}</strong></td>
+                    <td>{{ student.age }}</td>
+                    <td>{{ student.email }}</td>
+                    <td>
+                        <a href="{% url 'student_delete' student.id %}" class="btn-delete">
+                            <i class="fa-solid fa-trash-can"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <i class="fa-solid fa-user-slash"></i>
+            <p>No students yet. Add your first student above!</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
