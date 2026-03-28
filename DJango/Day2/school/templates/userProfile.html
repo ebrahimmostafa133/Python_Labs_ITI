@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Profile - ITI School{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-card">
+
+  <div class="profile-header">
+    <div class="avatar-container">
+      <div class="avatar">
+        <i class="fa-solid fa-user"></i>
+      </div>
+    </div>
+
+    <div class="user-name">
+      {% if user.first_name and user.last_name %}
+      {{ user.first_name }} {{ user.last_name }}
+      {% else %}
+      {{ user.get_full_name|default:user.username }}
+      {% endif %}
+    </div>
+
+    <div class="user-role">
+      <i class="fa-solid fa-at"></i> {{ user.username }}
+    </div>
+  </div>
+
+  <div class="profile-content">
+    <div class="info-section">
+      <h3><i class="fa-solid fa-circle-info"></i> Account Info</h3>
+
+      <div class="info-grid">
+
+        <div class="info-item">
+          <div class="info-label">Email</div>
+          <div class="info-value">{{ user.email|default:"Not set" }}</div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-label">Status</div>
+          <div class="info-value">
+            {% if user.is_active %}
+            <span style="color: var(--success);">Active</span>
+            {% else %}
+            <span style="color: var(--danger);">Inactive</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-label">Member Since</div>
+          <div class="info-value">{{ user.date_joined|date:"M d, Y" }}</div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-label">Last Login</div>
+          <div class="info-value">
+            {% if user.last_login %}
+            {{ user.last_login|date:"M d, Y" }}
+            {% else %}
+            Never
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <a href="{% url 'home' %}" class="btn-primary">
+        <i class="fa-solid fa-home"></i> Home
+      </a>
+
+      <a href="{% url 'logout' %}" class="btn-secondary" style="color: var(--danger);">
+        <i class="fa-solid fa-sign-out-alt"></i> Logout
+      </a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Grades - ITI School{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/grades.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main">
+  <div class="page-header">
+    <h1><i class="fa-solid fa-chart-bar"></i> Grades</h1>
+    <p>Manage student grades — record, edit, and track academic performance</p>
+  </div>
+
+  <!-- Search Form -->
+  <div class="search-container">
+    <form method="get" action="{% url 'grades' %}">
+      <input type="text" name="search" placeholder="Search by student name or subject..." value="{{ search_query }}">
+      <button type="submit" class="btn-search">
+        <i class="fa-solid fa-search"></i> Search
+      </button>
+    </form>
+  </div>
+
+  <!-- Add Grade Form -->
+  <div class="form-card">
+    <h2><i class="fa-solid fa-plus"></i> Record Grade</h2>
+    <form method="post" action="{% url 'grades' %}">
+      {% csrf_token %}
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="student">Student</label>
+          <select id="student" name="student" required>
+            <option value="">-- Select a student --</option>
+            {% for student in students %}
+            <option value="{{ student.id }}">{{ student.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <select id="subject" name="subject" required>
+            <option value="">-- Select a subject --</option>
+            {% for subject in subjects %}
+            <option value="{{ subject.id }}">{{ subject.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="value">Grade</label>
+          <input type="number" id="value" name="value" placeholder="Enter grade (0-100)" min="0" max="100" step="0.5"
+            required>
+        </div>
+        <button type="submit" class="btn-submit">
+          <i class="fa-solid fa-save"></i> Record Grade
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Grades Table -->
+  <div class="table-card">
+    <div class="table-header">
+      <h2><i class="fa-solid fa-list"></i> Grade Records</h2>
+      <span class="grade-count">{{ grades|length }} grade{{ grades|length|pluralize }}</span>
+    </div>
+    {% if grades %}
+    <table>
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Subject</th>
+          <th>Grade</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for grade in grades %}
+        <tr>
+          <td><strong>{{ grade.student.name }}</strong></td>
+          <td>{{ grade.subject.name }}</td>
+          <td><span class="grade-value">{{ grade.value }}</span></td>
+          <td>{{ grade.date_added|date:"M d, Y" }}</td>
+          <td>
+            <a href="{% url 'grade_edit' grade.id %}" class="btn-edit">
+              <i class="fa-solid fa-edit"></i> Edit
+            </a>
+            <a href="{% url 'grade_delete' grade.id %}" class="btn-delete">
+              <i class="fa-solid fa-trash-can"></i> Delete
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+      <i class="fa-solid fa-ban"></i>
+      <p>No grades recorded yet. Add the first grade above!</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

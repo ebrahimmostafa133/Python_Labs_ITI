@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Students - ITI School{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/students.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <div class="page-header">
+        <h1><i class="fa-solid fa-users"></i> Students</h1>
+        <p>Manage your students — add new records and keep track of everyone</p>
+    </div>
+
+    {% if msg %}
+    <div class="alert-success">
+        <i class="fa-solid fa-circle-check"></i>
+        {{ msg }}
+    </div>
+    {% endif %}
+
+    {% if error_message %}
+    <div class="alert-error">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        {{ error_message }}
+    </div>
+    {% endif %}
+
+    {% if success_message %}
+    <div class="alert-success">
+        <i class="fa-solid fa-circle-check"></i>
+        {{ success_message }}
+    </div>
+    {% endif %}
+
+    <!-- Create Student Form -->
+    <div class="form-card">
+        <h2><i class="fa-solid fa-user-plus"></i> Add New Student</h2>
+        <form action="#" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter student name" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" placeholder="Enter age" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="student@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="image">Profile Photo</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
+                <button type="submit" class="btn-submit">
+                    <i class="fa-solid fa-plus"></i> Add Student
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Students Table -->
+    <div class="table-card">
+        <div class="table-header">
+            <h2><i class="fa-solid fa-list"></i> Student Records</h2>
+            <span class="student-count">{{ students|length }} student{{ students|length|pluralize }}</span>
+        </div>
+        {% if students %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>
+                        {% if student.image %}
+                        <img src="{{ student.image.url }}" alt="{{ student.name }}" class="student-avatar">
+                        {% else %}
+                        <div class="no-image"><i class="fa-solid fa-user"></i></div>
+                        {% endif %}
+                    </td>
+                    <td><strong>{{ student.name }}</strong></td>
+                    <td>{{ student.age }}</td>
+                    <td>{{ student.email }}</td>
+                    <td>
+                        <a href="{% url 'student_delete' student.id %}" class="btn-delete">
+                            <i class="fa-solid fa-trash-can"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <i class="fa-solid fa-user-slash"></i>
+            <p>No students yet. Add your first student above!</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

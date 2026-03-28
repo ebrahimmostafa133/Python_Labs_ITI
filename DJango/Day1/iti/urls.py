@@ -19,7 +19,7 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from school.views import home, students
+from school.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),

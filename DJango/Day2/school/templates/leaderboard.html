@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Leaderboard - ITI School{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/leaderboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main">
+  <div class="page-header">
+    <h1><i class="fa-solid fa-trophy"></i> Leaderboard</h1>
+    <p>Top 5 students by total academic performance</p>
+  </div>
+
+  <div class="leaderboard-card">
+    <div class="leaderboard-header">
+      <h2><i class="fa-solid fa-star"></i> Top Performers</h2>
+    </div>
+    <div class="leaderboard-list">
+      {% if top_students %}
+      {% for entry in top_students %}
+      <div class="rank-item">
+        <div
+          class="rank-badge {% if forloop.counter == 1 %}rank-1{% elif forloop.counter == 2 %}rank-2{% elif forloop.counter == 3 %}rank-3{% else %}rank-other{% endif %}">
+          {% if forloop.counter == 1 %}🥇{% elif forloop.counter == 2 %}🥈{% elif forloop.counter == 3 %}🥉{% else %}{{
+          forloop.counter }}{% endif %}
+        </div>
+        <div class="rank-info">
+          <div class="rank-name">
+            <i class="fa-solid fa-user-circle"></i>
+            {{ entry.name }}
+          </div>
+        </div>
+        <div class="rank-score">
+          <div class="rank-score-value">{{ entry.total|floatformat:1 }}</div>
+          <div class="rank-score-label">Total Score</div>
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <div class="empty-state">
+        <i class="fa-solid fa-chart-line"></i>
+        <p>No data available. Start recording grades to see the leaderboard!</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
