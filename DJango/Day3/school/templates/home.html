@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}School System - ITI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-content">
+        <span class="hero-badge">🎓 School Management System</span>
+        <h1>Welcome to <span class="gradient-text">ITI</span></h1>
+        <p>A modern platform to manage students and collect feedback efficiently. Built with passion for education
+            excellence.</p>
+        <div class="hero-buttons">
+            <a href="{% url 'students' %}" class="btn-primary"><i class="fa-solid fa-users"
+                    style="margin-right:8px"></i>Manage Students</a>
+            <a href="{% url 'contact' %}" class="btn-outline"><i class="fa-solid fa-envelope"
+                    style="margin-right:8px"></i>Contact Us</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="features">
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon purple"><i class="fa-solid fa-user-plus"></i></div>
+            <h3>Student Management</h3>
+            <p>Create, view, and manage student records with ease. Upload photos and track information seamlessly.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon pink"><i class="fa-solid fa-comments"></i></div>
+            <h3>Feedback System</h3>
+            <p>Collect valuable feedback from students, parents, and staff through our intuitive contact form.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon green"><i class="fa-solid fa-graduation-cap"></i></div>
+            <h3>ITI Education</h3>
+            <p>Part of the Information Technology Institute ecosystem, delivering quality education since day one.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

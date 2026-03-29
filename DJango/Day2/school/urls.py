@@ -1,33 +1,22 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from . import views
 
-from school.views import (
-    home, students, student_delete, student_edit, contact,
-    subjects, subject_delete, subject_edit,
-    grades, grade_delete, grade_edit,
-    leaderboard, profile,
-    login_view, register_view, logout_view
-)
+router = DefaultRouter()
+router.register(r'grades', views.GradeViewSet, basename='grade')
 
 urlpatterns = [
-    path("login/", login_view, name="login"),
-    path("register/", register_view, name="register"),
-    path("logout/", logout_view, name="logout"),
+    path("", views.home, name="home"),
     
-    path("", home, name="home"),
-    path("contact/", contact, name="contact"),
-    path("profile/", profile, name="profile"),
+    path('students/', views.student_api_list, name='student-list'),
+    path('students/<int:pk>/', views.student_api_detail, name='student-detail'),
     
-    path("students/", students, name="students"),
-    path("students/<int:id>/delete/", student_delete, name="student_delete"),
-    path("students/<int:id>/edit/", student_edit, name="student_edit"),
+    path('subjects/', views.SubjectListCreateAPI.as_view(), name='subject-list'),
+    path('subjects/<int:pk>/', views.SubjectDetailAPI.as_view(), name='subject-detail'),
     
-    path("subjects/", subjects, name="subjects"),
-    path("subjects/<int:id>/delete/", subject_delete, name="subject_delete"),
-    path("subjects/<int:id>/edit/", subject_edit, name="subject_edit"),
+    path('', include(router.urls)),
     
-    path("grades/", grades, name="grades"),
-    path("grades/<int:id>/delete/", grade_delete, name="grade_delete"),
-    path("grades/<int:id>/edit/", grade_edit, name="grade_edit"),
-    
-    path("leaderboard/", leaderboard, name="leaderboard"),
+    path('leaderboard/', views.leaderboard_api, name='leaderboard-api'),
+
+    path('api-auth/', include('rest_framework.urls')),
 ]

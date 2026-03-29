@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit Student - ITI School{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/students.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main">
+  <div class="form-card">
+    <h1><i class="fa-solid fa-edit"></i> {% if is_edit %}Edit{% else %}Add{% endif %} Student</h1>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter student name"
+            value="{{ student.name|default:'' }}" required>
+        </div>
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input type="number" id="age" name="age" placeholder="Enter age" value="{{ student.age|default:'' }}"
+            required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="student@email.com"
+            value="{{ student.email|default:'' }}" required>
+        </div>
+        <div class="form-group">
+          <label for="image">Profile Photo</label>
+          <input type="file" id="image" name="image" accept="image/*">
+        </div>
+        <div class="button-group">
+          <button type="submit" class="btn-submit">
+            <i class="fa-solid fa-save"></i> {% if is_edit %}Update{% else %}Create{% endif %} Student
+          </button>
+          <a href="{% url 'students' %}" class="btn-cancel">
+            <i class="fa-solid fa-times"></i> Cancel
+          </a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

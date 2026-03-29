@@ -1,0 +1,448 @@
+/* Leaderboard Page Enhancements */
+.main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 100px 2rem 4rem;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  animation: fadeUp 0.8s ease;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.page-header h1 i {
+  color: var(--accent);
+  font-size: 2.2rem;
+}
+
+.page-header p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}
+
+/* Leaderboard Card */
+.leaderboard-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  overflow: hidden;
+  animation: fadeUp 0.8s ease 0.2s both;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.leaderboard-header {
+  padding: 2rem 2rem;
+  border-bottom: 1px solid var(--glass-border);
+  text-align: center;
+  background: linear-gradient(135deg, rgba(108, 99, 255, 0.1), rgba(67, 233, 123, 0.1));
+}
+
+.leaderboard-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.leaderboard-header h2 i {
+  color: var(--accent);
+}
+
+.leaderboard-list {
+  padding: 0;
+}
+
+.rank-item {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.rank-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--primary), var(--secondary));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.rank-item:hover {
+  background: rgba(108, 99, 255, 0.05);
+  transform: translateX(8px);
+}
+
+.rank-item:hover::before {
+  opacity: 1;
+}
+
+.rank-badge {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-right: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.rank-badge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+.rank-1 {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #000;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.rank-2 {
+  background: linear-gradient(135deg, #C0C0C0, #A8A8A8);
+  color: #000;
+  box-shadow: 0 0 20px rgba(192, 192, 192, 0.3);
+}
+
+.rank-3 {
+  background: linear-gradient(135deg, #CD7F32, #A0522D);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(205, 127, 50, 0.3);
+}
+
+.rank-item:nth-child(1) .rank-badge {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.rank-item:nth-child(2) .rank-badge {
+  animation: pulse 2s ease-in-out infinite 0.5s;
+}
+
+.rank-item:nth-child(3) .rank-badge {
+  animation: pulse 2s ease-in-out infinite 1s;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  }
+
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+  }
+}
+
+.student-info {
+  flex: 1;
+}
+
+.student-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.student-name i {
+  color: var(--primary);
+}
+
+.subjects-list {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.total-score {
+  font-size: 1.2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.total-score i {
+  color: var(--accent);
+}
+
+.rank-number {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* Trophy Animation */
+.trophy-icon {
+  font-size: 1.5rem;
+  color: #FFD700;
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+  animation: trophyGlow 3s ease-in-out infinite;
+}
+
+@keyframes trophyGlow {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+    transform: scale(1);
+  }
+
+  50% {
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+    transform: scale(1.1);
+  }
+}
+
+/* Medal Icons */
+.rank-1::after {
+  content: '🥇';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  z-index: 1;
+}
+
+.rank-2::after {
+  content: '🥈';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  z-index: 1;
+}
+
+.rank-3::after {
+  content: '🥉';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  z-index: 1;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--text-muted);
+}
+
+.empty-state i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.3;
+}
+
+.empty-state p {
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main {
+    padding: 80px 1rem 2rem;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .leaderboard-header {
+    padding: 1.5rem 1rem;
+  }
+
+  .leaderboard-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .rank-item {
+    padding: 1rem;
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .rank-badge {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+    margin: 0 auto;
+  }
+
+  .student-info {
+    text-align: center;
+  }
+
+  .total-score {
+    justify-content: center;
+  }
+
+  .rank-number {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+
+.rank-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.rank-item:hover::before {
+  opacity: 1;
+}
+
+.rank-item:last-child {
+  border-bottom: none;
+}
+
+.rank-badge {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: white;
+  margin-right: 1.5rem;
+}
+
+.rank-badge.rank-1 {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+}
+
+.rank-badge.rank-2 {
+  background: linear-gradient(135deg, #C0C0C0, #A9A9A9);
+}
+
+.rank-badge.rank-3 {
+  background: linear-gradient(135deg, #CD7F32, #B8860B);
+}
+
+.rank-badge.rank-other {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+.rank-info {
+  flex: 1;
+}
+
+.rank-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rank-name i {
+  color: var(--accent);
+}
+
+.rank-subjects {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.rank-score {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.rank-score-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.rank-score-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .rank-item {
+    padding: 1rem 1.5rem;
+  }
+
+  .rank-badge {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+  }
+
+  .rank-name {
+    font-size: 0.95rem;
+  }
+
+  .rank-score-value {
+    font-size: 1.4rem;
+  }
+
+  .rank-subjects {
+    font-size: 0.75rem;
+  }
+}

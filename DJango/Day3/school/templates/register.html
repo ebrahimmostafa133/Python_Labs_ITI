@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Register - ITI School{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h1><i class="fa-solid fa-user-plus"></i> Create Account</h1>
+      <p>Join our school system today!</p>
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="id_username">Username</label>
+        <input type="text" id="id_username" name="username" placeholder="Choose a username" required autofocus>
+        {% if form.username.errors %}
+        <ul class="error-list">
+          {% for error in form.username.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div class="form-group">
+        <label for="id_password1">Password</label>
+        <input type="password" id="id_password1" name="password1" placeholder="Create a strong password" required>
+        {% if form.password1.errors %}
+        <ul class="error-list">
+          {% for error in form.password1.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="form-help-text">At least 8 characters. Must contain letters and numbers.</p>
+        {% endif %}
+      </div>
+      <div class="form-group">
+        <label for="id_password2">Confirm Password</label>
+        <input type="password" id="id_password2" name="password2" placeholder="Confirm your password" required>
+        {% if form.password2.errors %}
+        <ul class="error-list">
+          {% for error in form.password2.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <button type="submit" class="btn-submit">
+        <i class="fa-solid fa-user-plus"></i> Create Account
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      Already have an account? <a href="{% url 'login' %}">Sign in here</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

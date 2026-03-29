@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Subjects - ITI School{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/subjects.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main">
+  <div class="page-header">
+    <h1><i class="fa-solid fa-book"></i> Subjects</h1>
+    <p>Manage all subjects — add, edit, and organize your course catalog</p>
+  </div>
+
+  <!-- Search Form -->
+  <div class="search-container">
+    <form method="get" action="{% url 'subjects' %}">
+      <input type="text" name="search" placeholder="Search subjects by name..." value="{{ search_query }}">
+      <button type="submit" class="btn-search">
+        <i class="fa-solid fa-search"></i> Search
+      </button>
+    </form>
+  </div>
+
+  <!-- Add New Subject Form -->
+  <div class="form-card">
+    <h2><i class="fa-solid fa-plus"></i> Add New Subject</h2>
+    <form method="post" action="{% url 'subjects' %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="name">Subject Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter subject name" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" placeholder="Brief description about the subject..."></textarea>
+      </div>
+      <button type="submit" class="btn-submit">
+        <i class="fa-solid fa-plus"></i> Add Subject
+      </button>
+    </form>
+  </div>
+
+  <!-- Subjects Table -->
+  <div class="table-card">
+    <div class="table-header">
+      <h2><i class="fa-solid fa-list"></i> Subject List</h2>
+      <span class="subject-count">{{ subjects|length }} subject{{ subjects|length|pluralize }}</span>
+    </div>
+    {% if subjects %}
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for subject in subjects %}
+        <tr>
+          <td><strong>{{ subject.name }}</strong></td>
+          <td>{{ subject.description|default:"No description" }}</td>
+          <td>
+            <a href="{% url 'subject_edit' subject.id %}" class="btn-edit">
+              <i class="fa-solid fa-edit"></i> Edit
+            </a>
+            <a href="{% url 'subject_delete' subject.id %}" class="btn-delete">
+              <i class="fa-solid fa-trash-can"></i> Delete
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+      <i class="fa-solid fa-book-slash"></i>
+      <p>No subjects found. Add your first subject above!</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
