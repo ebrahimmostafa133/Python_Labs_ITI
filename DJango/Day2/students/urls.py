@@ -18,6 +18,8 @@ urlpatterns = [
     path('leaderboard_view/', views.leaderboard_view, name='leaderboard'),
     
     # API
+    path('api/register/', views.register_api, name='register-api'),
+    path('api/login/', views.login_api, name='login-api'),
     path('api/students/', views.student_api_list, name='student-api-list'),
     path('api/students/<int:pk>/', views.student_api_detail, name='student-api-detail'),
     path('api/', include(router.urls)),

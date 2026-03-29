@@ -11,9 +11,6 @@ class Student(models.Model):
     @staticmethod
     def get_top_students(limit=5):
         from django.db.models import Sum
-        # Note: If Grade is moved, we filter on 'grades__value'
-        # Since related_name is still 'grades', this should work if we import Grade appropriately or use string.
-        # But annotate uses related name.
         return Student.objects.annotate(total=Sum("grades__value")).order_by("-total")[:limit]
 
     def __str__(self):
