@@ -5,6 +5,7 @@ from rest_framework import generics
 from .models import Subject
 from .serializers import SubjectSerializer
 
+"""
 @login_required
 def subjects_view(request):
     if request.method == "POST":
@@ -30,6 +31,7 @@ def subject_edit(request, pk):
         subject.save()
         return redirect("subjects")
     return render(request, "subjects/subject_edit.html", {"subject": subject})
+"""
 
 class SubjectListCreateAPI(generics.ListCreateAPIView):
     queryset = Subject.objects.all()

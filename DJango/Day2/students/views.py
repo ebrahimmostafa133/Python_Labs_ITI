@@ -2,18 +2,16 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.db.models import Sum
 
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status, generics, viewsets
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.decorators import permission_classes
 from rest_framework.authtoken.models import Token
 
-from .models import Student, UserProfile
+from .models import Student
 from .serializers import (
-    StudentSerializer, UserProfileSerializer, 
+    StudentSerializer, 
     UserSerializer, UserRegisterSerializer
 )
 
@@ -45,6 +43,7 @@ def login_api(request):
         }, status=status.HTTP_200_OK)
     return Response({"error": "Invalid Credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
+"""
 @login_required
 def home(request):
     return render(request, "students/home.html")
@@ -120,6 +119,7 @@ def student_edit(request, pk):
 def leaderboard_view(request):
     top_students = Student.get_top_students()
     return render(request, "students/leaderboard.html", {"top_students": top_students})
+"""
 
 @api_view(['GET', 'POST'])
 def student_api_list(request):
@@ -153,9 +153,3 @@ def student_api_detail(request, pk):
 class LeaderboardViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Student.get_top_students()
     serializer_class = StudentSerializer
-    def get_queryset(self):
-        return Student.get_top_students()
-
-class UserProfileViewSet(viewsets.ModelViewSet):
-    queryset = UserProfile.objects.all()
-    serializer_class = UserProfileSerializer

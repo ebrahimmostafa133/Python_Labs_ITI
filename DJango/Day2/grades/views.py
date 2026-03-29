@@ -7,6 +7,7 @@ from students.models import Student
 from subjects.models import Subject
 from .serializers import GradeSerializer, FeedbackSerializer
 
+"""
 @login_required
 def grades_view(request):
     search_query = request.GET.get("search", "")
@@ -69,6 +70,7 @@ def contact_view(request):
         Feedback.objects.create(email=email, message=message)
         msg = "Message sent successfully!"
     return render(request, "grades/contact.html", {"msg": msg})
+"""
 
 class GradeViewSet(viewsets.ModelViewSet):
     queryset = Grade.objects.all()
