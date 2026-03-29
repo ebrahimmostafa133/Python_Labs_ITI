@@ -9,6 +9,11 @@ class Student(models.Model):
     image = models.ImageField(upload_to="students/")
     date_added = models.DateTimeField(auto_now_add=True)
 
+    @staticmethod
+    def get_top_students(limit=5):
+        from django.db.models import Sum
+        return Student.objects.annotate(total=Sum("grades__value")).order_by("-total")[:limit]
+
     def __str__(self):
         return self.name
 
